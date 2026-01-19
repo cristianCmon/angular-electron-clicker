@@ -1,0 +1,205 @@
+* {
+    color: white;
+    font-weight: 800;
+    font-style: italic;
+}
+
+/* h1 {
+    color: blue;
+} */
+
+#contenedor {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: start;
+    align-items: center;
+
+    height: 100vh;
+    width: 100%;
+}
+
+#contador {
+    margin-top: 30px;
+    font-size: 30px;
+    text-align: center;
+}
+
+button {
+    width: 300px;
+    height: 300px;
+    display: inline-block;
+    padding: 40px 40px;
+    font-size: 28px !important;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #296AC9;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 8px #163A6E;
+}
+
+button:active {
+  box-shadow: 0 4px #163A6E;
+  transform: translateY(4px);
+}
+
+.btn2:active {
+    box-shadow: 0 5px #666;
+    transform: translateY(2px);
+}
+
+
+
+
+
+
+/* .maquina {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: start;
+    align-items: center;
+
+    height: 100vh;
+    width: 100%;
+}
+
+.titulo {
+    width: 100%;
+    background-color: hsl(217, 69%, 69%);
+    text-align: center;
+} */
+
+/* .bloque {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
+    height: 100%;
+    width: 100%;
+} */
+
+/* .productos {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: start;
+    align-items: center;
+
+    background-color: hsl(217, 89%, 40%);
+    height: 100%;
+    width: 60%;
+}
+
+.filaProductos {
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+}
+
+.producto {
+    width: 100px;
+    height: 100px;
+
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    border-radius: 10px;
+    background-color: white;
+}
+
+.producto:hover {
+    cursor: pointer;
+}
+
+.producto:active {
+    cursor: pointer;
+    scale:0.9;
+}
+
+.parteInferior {
+    display: flex;
+    flex-direction: row;
+}
+
+.bandejaSalida {
+    width: 250px;
+    height: 80px;
+
+    margin-top: 160px;
+
+    border-radius: 10px;
+
+    background-color: hsl(217, 89%, 20%);
+}
+
+.llaveServicio {
+    width: 50px;
+    height: 50px;
+
+    margin-top: 40px;
+
+    padding: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 10px;
+
+    background-color: rgb(198, 158, 158);
+} */
+
+/* .manejador {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: start;
+    align-items: center;
+    background-color: hsl(217, 89%, 60%);
+    height: 100%;
+    width: 40%;
+} */
+
+/* .display {
+    display: flex;
+    flex-direction: column;
+
+    width: 300px;
+    height: 90px;
+
+    margin-top: 30px;
+
+    font-size: 25px;
+
+    border-radius: 10px;
+    border-style: solid;
+    border-color: rgb(108, 113, 42);
+
+    background-color: hsl(220, 9%, 61%);
+}
+
+.filaDisplay {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+}
+
+.panelNumerico {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    padding-bottom: 4px;
+
+    border-radius: 10px;
+    border-style: solid;
+    border-color: rgb(57, 59, 59);
+
+    background-color: hsl(217, 14%, 46%);
+} */
