@@ -65,4 +65,5 @@ app.on("window-all-closed", () => {
     }
 });
 
-// npm run electron
+// npm run electron - Arranca la aplicación completa, necesario para probar la BD
+// ng serve - Arranca Angular en puerto 4200
