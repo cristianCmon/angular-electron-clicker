@@ -29,6 +29,8 @@ ipcMain.handle('insertar-puntuacion', async (event, datosUsuario) => {
   });
 });
 
+// CREAR RECIBIR USUARIOS
+// HACER SERVICIO
 
 
 let appWin;

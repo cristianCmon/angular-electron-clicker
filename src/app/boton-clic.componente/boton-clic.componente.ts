@@ -18,13 +18,16 @@ import { ServicioSqlite3 } from "../../servicios/servicioSqlite3"
 })
 export class BotonClicComponente {
     constructor(private servicioSqlite: ServicioSqlite3) {}
+    mensajeInicial = 'Púlsame para jugar';
     contador = 0;
     contadorSignal = signal(0);
 
     aumentarContador(valor: number) {
+        // if (this.contador == 0) {
+        //     this.contador = this.mensajeInicial;
+        // }
         this.contador += valor;
         this.contadorSignal.update((actual) => actual + valor);
-        console.log("hola");
     }
 
     reiniciarContador() {
@@ -33,7 +36,7 @@ export class BotonClicComponente {
     }
 
     async guardarPuntuacion() {
-        try {
+        try { // Implementación de prueba
             const resultado = await this.servicioSqlite.addPuntuacion('John Doe', this.contador.toString());
             console.log('Puntuación insertada con ID: ', resultado.id);
         } catch (error) {
