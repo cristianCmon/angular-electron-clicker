@@ -31,20 +31,15 @@ export class BotonClicComponente {
 
 
     aumentarContador(valor: number) {
-        // if (this.contador == 0) {
-        //     this.contador = this.mensajeInicial;
-        // }
-        // this.textoContador?.textContent = "hola";
         if (!this.finPartida) {
             if (this.empezarCuenta) {
                 this.textoBoton = this.timer.toString(10);
                 this.iniciarContadorDescendente();
                 this.empezarCuenta = false;
             }
-            
+
             this.contador += valor;
             this.contadorSignal.update((actual) => actual + valor);
-            // this.textoBoton = this.contador.toString(10);
     
             const sonidoClick = new Audio('../../public/SANWA OBSF.mp3');
             sonidoClick.play();
@@ -55,11 +50,6 @@ export class BotonClicComponente {
         }
     }
 
-    // reiniciarContador() {
-    //     this.contador = 0;
-    //     this.contadorSignal.set(0);
-    // }
-
     async guardarPuntuacion() {
         try { // Implementación de prueba
             const resultado = await this.servicioSqlite.addPuntuacion('John Doe', this.contador.toString());
@@ -69,7 +59,6 @@ export class BotonClicComponente {
         }
     }
 
-    
     // Para un contador que se detiene al llegar a cero
     iniciarContadorDescendente() {
         let tiempoRestanteMs = this.timer * 1000;
@@ -88,7 +77,7 @@ export class BotonClicComponente {
                 this.finPartida = true;
                 this.cd.detectChanges();
             }
-        }, 10);
+        }, 10); //1000 para 1seg, 10 para precisión de centésimas
     }
 
     formatearTiempo(ms: number): string {
@@ -98,11 +87,6 @@ export class BotonClicComponente {
         // padStart asegura que siempre haya dos dígitos
         return `${segundos.toString().padStart(2, '0')}.${milisegundos.toString().padStart(2, '0')}`;
     }
-
-
-
-
-
 
 
 }
