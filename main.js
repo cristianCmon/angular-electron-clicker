@@ -31,7 +31,19 @@ ipcMain.handle('insertar-puntuacion', async (event, datosUsuario) => {
 
 // CREAR RECIBIR USUARIOS
 // HACER SERVICIO
-
+ipcMain.handle('mostrar-puntuaciones', async (event, datosUsuario) => {
+  return new Promise((resolve, reject) => {
+    const query = "SELECT * FROM puntuaciones ORDER BY puntuacion DESC LIMIT 5";
+    
+    // db.run(query, function(err) {
+    //   if (err) reject(err);
+    //   else resolve({ id: this.lastID });
+    // });
+    db.each("SELECT * FROM puntuaciones ORDER BY puntuacion DESC LIMIT 5", (err, row) => {
+        console.log(row.id + ": " + row.nombre + " - " + row.puntuacion)
+    });
+  });
+});
 
 let appWin;
 
@@ -39,7 +51,7 @@ createWindow = () => {
     appWin = new BrowserWindow({
         width: 1024,
         height: 768,
-        title: "Clicker ANGULON",
+        title: "Clicker ANGUL-ON",
         resizable: false,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'), // Necesario especificar esta ruta del preload

@@ -33,7 +33,7 @@ export class BotonClicComponente {
     aumentarContador(valor: number) {
         if (!this.finPartida) {
             if (this.empezarCuenta) {
-                this.textoBoton = this.timer.toString(10);
+                // this.textoBoton = this.timer.toString(10);
                 this.iniciarContadorDescendente();
                 this.empezarCuenta = false;
             }
@@ -59,8 +59,13 @@ export class BotonClicComponente {
 
     async guardarPuntuacion() {
         try { // Implementación de prueba
-            const resultado = await this.servicioSqlite.addPuntuacion('John Doe', this.contador.toString());
-            console.log('Puntuación insertada con ID: ', resultado.id);
+            // const resultado = await this.servicioSqlite.addPuntuacion('John Doe', this.contador.toString());
+            // TODO REVISAR
+            console.log('Ha pasado por aquí');
+            const resultado2 = await this.servicioSqlite.takePuntuaciones();
+            console.log(resultado2);
+
+            // console.log('Puntuación insertada con ID: ', resultado.id);
         } catch (error) {
             console.error('Error al insertar puntuación: ', error);
         }
@@ -83,6 +88,7 @@ export class BotonClicComponente {
                 this.textoBoton = "¡Tiempo!";
                 this.finPartida = true;
                 this.cd.detectChanges();
+                this.guardarPuntuacion();
                 // TODO MOSTRAR MODAL INSERTAR PUNTUACIÓN guardarPuntuacion()
             }
         }, 10); //1000 para 1seg, 10 para precisión de centésimas
