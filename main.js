@@ -21,7 +21,7 @@ ipcMain.handle('insertar-puntuacion', async (event, datosUsuario) => {
   return new Promise((resolve, reject) => {
     const { nombre, puntuacion } = datosUsuario;
     const query = `INSERT INTO puntuaciones (nombre, puntuacion) VALUES (?, ?)`;
-    console.log("holi se están insertando datos");
+    
     db.run(query, [nombre, puntuacion], function(err) {
       if (err) reject(err);
       else resolve({ id: this.lastID });
