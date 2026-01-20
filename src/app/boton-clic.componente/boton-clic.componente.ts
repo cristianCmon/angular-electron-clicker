@@ -18,9 +18,9 @@ import { ServicioSqlite3 } from "../../servicios/servicioSqlite3"
 })
 export class BotonClicComponente {
     constructor(private servicioSqlite: ServicioSqlite3) {}
-    mensajeInicial = 'Púlsame para jugar';
     contador = 0;
     contadorSignal = signal(0);
+    mensajeInicial = 'Púlsame para jugar';
 
     aumentarContador(valor: number) {
         // if (this.contador == 0) {
@@ -28,6 +28,13 @@ export class BotonClicComponente {
         // }
         this.contador += valor;
         this.contadorSignal.update((actual) => actual + valor);
+
+        const sonidoClick = new Audio('../../public/SANWA OBSF.mp3');
+        sonidoClick.play();
+        // Opcional: Eliminar el audio después de reproducido para limpiar memoria
+        sonidoClick.addEventListener('ended', () => {
+            sonidoClick.remove();
+        });
     }
 
     reiniciarContador() {
