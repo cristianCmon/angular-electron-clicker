@@ -1,9 +1,11 @@
 <!-- <h1>Hola Mundo - Contador de clics</h1>
 <h2>Clics Señal: {{ contadorSignal() }}</h2> -->
-<div id="contenedor">
+<div id="contenedorPuntos">
+    <button id="botonPuntos">Puntuaciones</button>
+</div>
+<div id="contenedorJuego">
     <div>
-        <!-- <button id="boton" (click)="aumentarContador(1)">{{ contador }}</button> -->
-         <button id="boton" (click)="aumentarContador(1)"></button>
+        <button id="botonJuego" (click)="aumentarContador(1)">{{ textoBoton }}</button>
     </div>
     
     <!-- <div>
@@ -15,5 +17,7 @@
     </div> -->
 
     <div id="contador">{{ contador }}</div>
-    
 </div>
+<!-- <div>
+    {{textoBoton}}
+</div> -->

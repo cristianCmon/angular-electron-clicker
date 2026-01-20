@@ -7,10 +7,10 @@
     user-select: none; /* Standard syntax */
     
     /* background-color: blueviolet; */
-    
 }
 
 body {
+    height: 100vh;
     background: #5252D4;
     background: linear-gradient(45deg,rgba(82, 82, 212, 1) 0%, rgba(117, 117, 221, 1) 76%);
 }

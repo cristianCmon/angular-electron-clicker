@@ -10,7 +10,7 @@ const db = new sqlite3.Database(path.join(__dirname, 'db/test.db'), (err) => {
     } else {
         console.log('CONECTADO sqlite3 DB!');
         // PRUEBA MOSTRAR TABLA CONSOLA
-        db.each("SELECT * FROM puntuaciones", (err, row) => {
+        db.each("SELECT * FROM puntuaciones ORDER BY puntuacion DESC LIMIT 5", (err, row) => {
             console.log(row.id + ": " + row.nombre + " - " + row.puntuacion)
         });
     }
