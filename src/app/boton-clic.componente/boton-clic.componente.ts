@@ -1,5 +1,5 @@
 import { Component, signal, ChangeDetectorRef } from "@angular/core";
-import { ServicioSqlite3 } from "../../servicios/servicioSqlite3"
+import { ServicioSqlite3 } from "../../servicios/servicioSqlite3";
 
 @Component({
     // template: `
@@ -47,7 +47,14 @@ export class BotonClicComponente {
             sonidoClick.addEventListener('ended', () => {
                 sonidoClick.remove();
             });
+        } else {
+            // implementar sonido alerta
         }
+    }
+
+    verPuntuaciones() {
+        // MOSTRAR MODAL
+        console.log('botón puntuaciones pulsado');
     }
 
     async guardarPuntuacion() {
@@ -76,6 +83,7 @@ export class BotonClicComponente {
                 this.textoBoton = "¡Tiempo!";
                 this.finPartida = true;
                 this.cd.detectChanges();
+                // TODO MOSTRAR MODAL INSERTAR PUNTUACIÓN guardarPuntuacion()
             }
         }, 10); //1000 para 1seg, 10 para precisión de centésimas
     }
