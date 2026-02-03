@@ -4,12 +4,12 @@ import { Injectable } from '@angular/core';
 
 export class ServicioSqlite3 {
 
-  async addPuntuacion(nombre: string, puntuacion: string) {
+  async registrarPuntuacion(nombre: string, puntuacion: string) {
     // Accedemos al objeto expuesto en el preload
     return await (window as any).electronAPI.insertarPuntuacion({ nombre, puntuacion });
   }
 
-  async takePuntuaciones() {
+  async obtenerPuntuaciones() {
     // Accedemos al objeto expuesto en el preload
     return await (window as any).electronAPI.mostrarPuntuaciones();
   }

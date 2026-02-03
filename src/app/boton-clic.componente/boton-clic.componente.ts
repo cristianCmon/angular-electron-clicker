@@ -1,5 +1,6 @@
 import { Component, signal, ChangeDetectorRef } from "@angular/core";
 import { ServicioSqlite3 } from "../../servicios/servicioSqlite3";
+import { FormsModule } from '@angular/forms';
 
 @Component({
     // template: `
@@ -13,6 +14,9 @@ import { ServicioSqlite3 } from "../../servicios/servicioSqlite3";
     //         color: red;
     //     }
     // `,
+    selector: 'app-boton-clic',
+    standalone: true,
+    imports: [FormsModule],
     templateUrl: './boton-clic.componente.html',
     styleUrl: './boton-clic.componente.css'
 })
@@ -25,6 +29,11 @@ export class BotonClicComponente {
     mensajeInicial = 'Púlsame para jugar';
     empezarCuenta = true;
     finPartida = false;
+    animarContador = false;
+    mostrarModalPuntuaciones = false;
+    mostrarModalFinPartida = false;
+    nombreJugador = '';
+    listaPuntuaciones: any[] = [];
 
     timer = 20; // Valor inicial timer
     intervalo: any;
@@ -40,6 +49,15 @@ export class BotonClicComponente {
 
             this.contador += valor;
             this.contadorSignal.update((actual) => actual + valor);
+
+            // LÓGICA DE LA ANIMACIÓN
+            // Activamos animación
+            this.animarContador = true;
+            // Reiniciamos la variable a los 50ms
+            setTimeout(() => {
+                this.animarContador = false;
+                this.cd.detectChanges(); // Forzamos detección
+            }, 50);
     
             const sonidoClick = new Audio('../../public/SANWA OBSF.mp3');
             sonidoClick.play();
@@ -47,27 +65,9 @@ export class BotonClicComponente {
             sonidoClick.addEventListener('ended', () => {
                 sonidoClick.remove();
             });
+
         } else {
             // implementar sonido alerta
-        }
-    }
-
-    verPuntuaciones() {
-        // MOSTRAR MODAL
-        console.log('botón puntuaciones pulsado');
-    }
-
-    async guardarPuntuacion() {
-        try { // Implementación de prueba
-            // const resultado = await this.servicioSqlite.addPuntuacion('John Doe', this.contador.toString());
-            // TODO REVISAR
-            console.log('Ha pasado por aquí');
-            const resultado2 = await this.servicioSqlite.takePuntuaciones();
-            console.log(resultado2);
-
-            // console.log('Puntuación insertada con ID: ', resultado.id);
-        } catch (error) {
-            console.error('Error al insertar puntuación: ', error);
         }
     }
 
@@ -83,13 +83,14 @@ export class BotonClicComponente {
                 this.textoBoton = this.formatearTiempo(tiempoRestanteMs);
                 // console.log(this.textoBoton);
                 this.cd.detectChanges();
+
             } else {
                 clearInterval(this.intervalo); // Detiene el intervalo cuando llega a cero
                 this.textoBoton = "¡Tiempo!";
                 this.finPartida = true;
                 this.cd.detectChanges();
-                this.guardarPuntuacion();
-                // TODO MOSTRAR MODAL INSERTAR PUNTUACIÓN guardarPuntuacion()
+                // Mostramos modal registro puntuación
+                this.finalizarPartida();
             }
         }, 10); //1000 para 1seg, 10 para precisión de centésimas
     }
@@ -102,6 +103,60 @@ export class BotonClicComponente {
         return `${segundos.toString().padStart(2, '0')}.${milisegundos.toString().padStart(2, '0')}`;
     }
 
+    reiniciarPartida() { // Reseteamos variables
+        this.contador = 0;
+        this.contadorSignal.set(0);
+        this.empezarCuenta = true;
+        this.finPartida = false;
+        this.timer = 20;
+        this.textoBoton = '¡Clica!';
+        this.nombreJugador = '';
+        this.cd.detectChanges();
+    }
 
+    async finalizarPartida() {
+        this.mostrarModalFinPartida = true;
+        this.cd.detectChanges();
+    }
+
+    async guardarPuntuacion() {
+        // Evita validar pulsando Enter
+        if (this.nombreJugador.trim() === '') {
+            return;
+        }
+
+        try {
+            await this.servicioSqlite.registrarPuntuacion(this.nombreJugador, this.contador.toString());
+            this.mostrarModalFinPartida = false;
+            this.reiniciarPartida();
+
+        } catch (error) {
+            console.error('ERROR GUARDADO:', error);
+        }
+    }
+
+    cancelarGuardado() {
+        this.mostrarModalFinPartida = false;
+        this.reiniciarPartida();
+    }
+
+    async verPuntuaciones() {
+        // MOSTRAR MODAL
+        // console.log("Botón pulsado");
+        try {
+            const resultado = await this.servicioSqlite.obtenerPuntuaciones();
+            // console.log('Datos recibidos:', resultado);
+            this.listaPuntuaciones = resultado;
+            this.mostrarModalPuntuaciones = true;
+            this.cd.detectChanges();
+
+        } catch (error) {
+            console.error('ERROR - Fallo al mostrar puntuaciones:', error);
+        }
+    }
+
+    cerrarPuntuaciones() {
+        // console.log('Modal puntuaciones cerrado');
+        this.mostrarModalPuntuaciones = false;
+    }
 }
-// https://www.youtube.com/watch?v=6wD-xcQ_1a8&list=PLCKuOXG0bPi3cfoQcSTaGUnqZbzLA30Hi&index=8

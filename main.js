@@ -10,37 +10,40 @@ const db = new sqlite3.Database(path.join(__dirname, 'db/test.db'), (err) => {
     } else {
         console.log('CONECTADO sqlite3 DB!');
         // PRUEBA MOSTRAR TABLA CONSOLA
-        db.each("SELECT * FROM puntuaciones ORDER BY puntuacion DESC LIMIT 5", (err, row) => {
-            console.log(row.id + ": " + row.nombre + " - " + row.puntuacion)
-        });
+        // db.each("SELECT * FROM puntuaciones ORDER BY puntuacion DESC LIMIT 5", (err, row) => {
+        //     console.log(row.id + ": " + row.nombre + " - " + row.puntuacion)
+        // });
     }
 });
 
-// MANEJADOR INSERCIÓN DE PUNTOS
+// MANEJADORES -- ¡¡¡IMPORTANTE ENLAZARLOS EN preload.js!!!
+// GUARDAR PUNTUACIÓN
 ipcMain.handle('insertar-puntuacion', async (event, datosUsuario) => {
   return new Promise((resolve, reject) => {
     const { nombre, puntuacion } = datosUsuario;
-    const query = `INSERT INTO puntuaciones (nombre, puntuacion) VALUES (?, ?)`;
+    const consulta = `INSERT INTO puntuaciones (nombre, puntuacion) VALUES (?, ?)`;
     
-    db.run(query, [nombre, puntuacion], function(err) {
+    db.run(consulta, [nombre, puntuacion], function(err) {
       if (err) reject(err);
       else resolve({ id: this.lastID });
     });
   });
 });
 
-// CREAR RECIBIR USUARIOS
-// HACER SERVICIO
+// MOSTRAR PUNTUACIÓN
 ipcMain.handle('mostrar-puntuaciones', async (event, datosUsuario) => {
   return new Promise((resolve, reject) => {
-    const query = "SELECT * FROM puntuaciones ORDER BY puntuacion DESC LIMIT 5";
-    
-    // db.run(query, function(err) {
-    //   if (err) reject(err);
-    //   else resolve({ id: this.lastID });
-    // });
-    db.each("SELECT * FROM puntuaciones ORDER BY puntuacion DESC LIMIT 5", (err, row) => {
-        console.log(row.id + ": " + row.nombre + " - " + row.puntuacion)
+    const consulta = "SELECT * FROM puntuaciones ORDER BY CAST(puntuacion AS INTEGER) DESC LIMIT 5";
+
+    // db.all devuelve un array con todos los resultados
+    db.all(consulta, [], (err, rows) => {
+        if (err) {
+            console.error("Error en DB:", err);
+            reject(err);
+        } else {
+            // resolve envía los datos de vuelta a Angular
+            resolve(rows); 
+        }
     });
   });
 });

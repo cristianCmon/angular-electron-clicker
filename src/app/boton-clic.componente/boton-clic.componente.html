@@ -7,5 +7,73 @@
         <button id="botonJuego" (click)="aumentarContador(1)">{{ textoBoton }}</button>
     </div>
 
-    <div id="contador">{{ contador }}</div>
+    <div id="contador" [class.efectoLatido]="animarContador">{{ contador }}</div>
 </div>
+
+<!-- MODAL PUNTUACIONES -->
+@if (mostrarModalPuntuaciones) {
+    <div class="modal-overlay">
+        <div class="modal-contenedor">
+            <div class="modal-header">
+                <h2>TOP-5 Puntuaciones</h2>
+                <button class="btn-cerrar" (click)="cerrarPuntuaciones()">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Jugador</th>
+                            <th>Clicks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of listaPuntuaciones; track item.id) {
+                            <tr>
+                                <td>{{ item.nombre }}</td>
+                                <td>{{ item.puntuacion }}</td>
+                            </tr>
+                        } @empty {
+                            <tr>
+                                <td colspan="2">No hay puntuaciones registradas todavía.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- MODAL FIN PARTIDA GUARDAR PUNTUACIÓN -->
+@if (mostrarModalFinPartida) {
+    <div class="modal-overlay">
+        <div class="modal-contenedor">
+            <div class="modal-header">
+                <h2>¡Partida Terminada!</h2>
+            </div>
+            <div class="modal-body" style="text-align: center; margin-top: 20px;">
+                <p style="font-size: 24px;">Lograste {{ contador }} puntos</p>
+                
+                <input type="text" 
+                    [(ngModel)]="nombreJugador" 
+                    placeholder="Introduce tu nombre..."
+                    (keyup.enter)="guardarPuntuacion()"
+                    style="padding: 10px; width: 80%; color: black; margin-top: 20px; margin-bottom: 20px;">
+                
+                <button id="botonPuntos"
+                    (click)="guardarPuntuacion()"
+                    [disabled]="nombreJugador.trim() === ''"
+                    style="margin-top: 20px; width: auto;">
+                    GUARDAR
+                </button>
+
+                <button id="botonCancelar"
+                    (click)="cancelarGuardado()"
+                    style="margin-top: 25px !important; margin-bottom: 20px !important;flex: 1; width: auto;">
+                    CANCELAR
+                </button>
+            </div>
+        </div>
+    </div>
+}
